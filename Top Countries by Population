@@ -1,0 +1,35 @@
+#In this SQL code, I'm querying a database that's holding country population data to answer questions about the data. 
+
+--Which country has the lowest net migrant rate?
+SELECT name, MIN(net_migrants) AS "min net migrants" 
+FROM countries;
+
+--What are the top ten highestly populated countries and their populations?
+SELECT name, population 
+FROM countries 
+LIMIT 10;
+
+--What are the top five countries with highest population densities?
+SELECT name FROM countries 
+ORDER BY density_per_sq_km DESC
+LIMIT 5;
+
+--What is the average population size for countries where the national median age is above the international average?
+SELECT AVG(population) AS "average population" 
+FROM countries 
+WHERE median_age > (SELECT AVG(median_age) FROM countries);
+
+--What are the fertility rates and net migrant rates for countries with a population change higher than the international average?
+SELECT name, fertility_rate, net_migrants 
+FROM countries 
+WHERE population_change > (SELECT AVG(population_change) FROM countries);
+
+--How many countries have population sizes greater than, and smaller than the USA in their own categories?
+SELECT COUNT(*),
+    CASE
+        WHEN population > (SELECT population FROM countries WHERE name = "United States") THEN "Greater Pop Than USA"
+        WHEN population = (SELECT population FROM countries WHERE name = "United States") THEN "USA"
+        WHEN population < ((SELECT population FROM countries WHERE name = "United States")) THEN "Lesser Pop Than USA"
+    END AS "relative_pop_to_USA"
+FROM countries
+GROUP BY relative_pop_to_USA;
