@@ -1,0 +1,28 @@
+**I created two related tables for famous authors and book titles.
+
+CREATE TABLE authors (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);
+
+INSERT INTO authors VALUES (1, "Charlotte Bronte");
+INSERT INTO authors VALUES (2, "George Eliot");
+INSERT INTO authors VALUES (3, "Thomas Hardy");
+INSERT INTO authors VALUES (4, "Elizabeth Gaskell");
+INSERT INTO authors VALUES (5, "Oscar Wilde");
+INSERT INTO authors VALUES (6, "Charles Dickens");
+
+CREATE TABLE books (book_id INTEGER PRIMARY KEY AUTOINCREMENT, author_id INTEGER, title TEXT);
+
+INSERT INTO books VALUES (1, 1, "Jane Eyre");
+INSERT INTO books VALUES (2, 1, "Vilette");
+INSERT INTO books VALUES (3, 2, "Middlemarch");
+INSERT INTO books VALUES (4, 2, "A Mill on the Floss");
+INSERT INTO books Values (5, 3, "Jude the Obscure");
+INSERT INTO books VALUES (6, 3, "Far from the Madding Crowd");
+INSERT INTO books VALUES (7, 4, "North & South");
+INSERT INTO books VALUES (8, 4, "Wives & Daughters");
+INSERT INTO books VALUES (9, 5, "The Picture of Dorian Gray");
+INSERT INTO books VALUES (10, 6, "Great Expectations");
+
+--Display each book title alongside its author
+SELECT authors.name, books.title 
+FROM authors
+JOIN books ON authors.id = books.author_id;
